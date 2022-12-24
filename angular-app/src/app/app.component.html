@@ -1,0 +1,74 @@
+<header class="bg-slate-600 text-white p-2">
+  <div class="max-w-4xl mx-auto text-lg font-semibold">
+    Azure Static Web App Demo
+  </div>
+</header>
+
+<div class="max-w-4xl mx-auto flex flex-col gap-2 my-2">
+  <a href="https://github.com/grant-wilson-freelance/azure-functions-demo"
+    ><p class="bg-blue-400 p-2 rounded-sm">
+      https://github.com/grant-wilson-freelance/azure-functions-demo
+    </p></a
+  >
+  <div class="bg-gray-300 rounded-md p-2">
+    <p class="my-2">
+      This repo uses Azure Static Web Apps for hosting this frontend built with
+      Angular 15 <code>(/angular-app)</code>, and Azure Functions
+      <code>(/api)</code> for the REST API.
+    </p>
+    <p class="my-2">
+      This can be run locally using npm start for each project, and also
+      deployed to Azure using GitHub Actions. The GitHub action configuration
+      file is in
+      <code>/.github/workspace/azure-ci-cd.yml</code>
+    </p>
+    <p>Use the table below to exercize the REST API.</p>
+  </div>
+  <main>
+    <button mat-raised-button color="primary" (click)="_add()">Add New</button>
+    <table
+      *ngIf="_products$ | async as products"
+      mat-table
+      [dataSource]="products"
+      class="mat-elevation-z1"
+    >
+      <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.quantity }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button (click)="_edit(element)">edit</button
+          ><button mat-button color="warn" (click)="_delete(element)">
+            delete
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="_displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: _displayedColumns"></tr>
+    </table>
+  </main>
+</div>
